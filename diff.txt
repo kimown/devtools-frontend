@@ -1,0 +1,60 @@
+diff --git a/front_end/core/sdk/ConsoleModel.ts b/front_end/core/sdk/ConsoleModel.ts
+index 28bdc4e2e..aa1f760db 100644
+--- a/front_end/core/sdk/ConsoleModel.ts
++++ b/front_end/core/sdk/ConsoleModel.ts
+@@ -375,10 +375,13 @@ export class ConsoleModel extends Common.ObjectWrapper.ObjectWrapper<EventTypes>
+       runtimeModel.discardConsoleEntries();
+     }
+     this.clear();
++    debugger
++    debugger
+   }
+ 
+   private clear(): void {
+-    this.#messagesInternal = [];
++    const deleteNumber = Math.floor(this.#messagesInternal.length/2)
++    this.#messagesInternal = this.#messagesInternal.slice(deleteNumber);
+     this.#messageByExceptionId.clear();
+     this.#errorsInternal = 0;
+     this.#warningsInternal = 0;
+diff --git a/front_end/models/bindings/PresentationConsoleMessageHelper.ts b/front_end/models/bindings/PresentationConsoleMessageHelper.ts
+index dc198e19c..00959eb6f 100644
+--- a/front_end/models/bindings/PresentationConsoleMessageHelper.ts
++++ b/front_end/models/bindings/PresentationConsoleMessageHelper.ts
+@@ -177,6 +177,7 @@ export class PresentationConsoleMessageHelper {
+   }
+ 
+   consoleCleared(): void {
++    debugger
+     this.#pendingConsoleMessages = new Map();
+     this.debuggerReset();
+   }
+diff --git a/scripts/devtools_paths.py b/scripts/devtools_paths.py
+index 2fa6a9060..ff91f4471 100644
+--- a/scripts/devtools_paths.py
++++ b/scripts/devtools_paths.py
+@@ -41,10 +41,12 @@ def node_path():
+     try:
+         old_sys_path = sys.path[:]
+         sys.path.append(path.join(third_party_path(), 'node'))
+-        import node
++        print("========================================================")
++        print(old_sys_path)
++        #import node
+     finally:
+         sys.path = old_sys_path
+-    return node.GetBinaryPath()
++    return "/home/google/.tnvm/versions/node/v14.18.2/bin/node"
+ 
+ 
+ def devtools_root_path():
+diff --git a/third_party/node/node.py b/third_party/node/node.py
+index 93b1ba1d9..2a6efcc54 100755
+--- a/third_party/node/node.py
++++ b/third_party/node/node.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env vpython
++#!/usr/bin/env python3
+ # Copyright 2017 The Chromium Authors. All rights reserved.
+ # Use of this source code is governed by a BSD-style license that can be
+ # found in the LICENSE file.
